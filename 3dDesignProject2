@@ -1,13 +1,13 @@
 #include "pitches.h"
 
-const int buttonPin1 = 2; //The number of the first pushbutton pin
-const int buttonPin2 = 3; //The number of the second pushbutton pin
+const int buttonPin1 = 2; //the first pushbutton pin
+const int buttonPin2 = 3; //the second pushbutton pin
 
-const int ledPin1 = 12; //The number of the first LED pin
-const int ledPin2 = 13; //The number of the second LED pin
+const int ledPin1 = 12; //the first LED pin
+const int ledPin2 = 13; //the second LED pin
 
-int buttonState1 = 0; //variable for reading the first pushbutton status
-int buttonState2 = 0; //variable for reading the second pushbutton status
+int buttonState1 = 0; //reading the first pushbutton status
+int buttonState2 = 0; //reading the second pushbutton status
 
 
 //The melody 1& 2 code, the pitches.h and the note duration 1 & 2 was borrowed 
@@ -30,9 +30,9 @@ int noteDurations2[] = {
 void setup() {
   Serial.begin(9600);
 
-  pinMode(9, OUTPUT); //Initialize pin 9 as an output for the speaker
-  pinMode(buttonPin1, INPUT); //Initialize the first pushbutton pin as an input
-  pinMode(buttonPin2, INPUT); //Initialize the second pushbutton pin as an input
+  pinMode(9, OUTPUT); //output for the speaker
+  pinMode(buttonPin1, INPUT); //input for the first pushbutton
+  pinMode(buttonPin2, INPUT); //input for the second pushbutton
 }
 
 void loop() {
@@ -40,8 +40,8 @@ void loop() {
 }
 
 void firstLight() {
-  buttonState1 = digitalRead(buttonPin1); //read the state of the first pushbutton value
-  buttonState2 = digitalRead(buttonPin2); //read the state of the second pushbutton value
+  buttonState1 = digitalRead(buttonPin1); //to read the first pushbutton value
+  buttonState2 = digitalRead(buttonPin2); //to read the second pushbutton value
   
   if (buttonState1 == HIGH) {
     digitalWrite(ledPin1, HIGH);
@@ -58,6 +58,7 @@ void firstLight() {
     digitalWrite(ledPin1, LOW);
     noTone(9);
   }
+//end of the tone melody
 
   if (buttonState2 == HIGH) {
     digitalWrite(ledPin2, HIGH);
@@ -69,6 +70,7 @@ void firstLight() {
       tone(9, melody2[thisNote], noteDuration2);
       int pauseBetweenNotes = noteDuration2 * 1.30;
       delay(pauseBetweenNotes);
+//end of the tone melody
     } 
   } else {
     digitalWrite(ledPin2, LOW);
