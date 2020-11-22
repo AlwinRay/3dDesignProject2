@@ -1,0 +1,78 @@
+#include "pitches.h"
+
+const int buttonPin1 = 2; //The number of the first pushbutton pin
+const int buttonPin2 = 3; //The number of the second pushbutton pin
+
+const int ledPin1 = 12; //The number of the first LED pin
+const int ledPin2 = 13; //The number of the second LED pin
+
+int buttonState1 = 0; //variable for reading the first pushbutton status
+int buttonState2 = 0; //variable for reading the second pushbutton status
+
+
+//The melody 1& 2 code, the pitches.h and the note duration 1 & 2 was borrowed 
+//from toneMelody example
+int melody1[] = {
+  NOTE_DS2, NOTE_DS2, NOTE_F1, NOTE_GS1, NOTE_C1, NOTE_C1
+};
+
+int noteDurations1[] = {
+  8, 8, 6, 2, 6, 4
+};
+
+int melody2[] = {
+  NOTE_DS1, NOTE_C1, NOTE_C1, NOTE_AS1, NOTE_AS1, NOTE_AS1
+};
+int noteDurations2[] = {
+  8, 6, 8, 10, 8, 8
+};
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(9, OUTPUT); //Initialize pin 9 as an output for the speaker
+  pinMode(buttonPin1, INPUT); //Initialize the first pushbutton pin as an input
+  pinMode(buttonPin2, INPUT); //Initialize the second pushbutton pin as an input
+}
+
+void loop() {
+  firstLight();
+}
+
+void firstLight() {
+  buttonState1 = digitalRead(buttonPin1); //read the state of the first pushbutton value
+  buttonState2 = digitalRead(buttonPin2); //read the state of the second pushbutton value
+  
+  if (buttonState1 == HIGH) {
+    digitalWrite(ledPin1, HIGH);
+
+//This whole section of the code was borrowed from the toneMelody example 
+    for (int thisNote = 0; thisNote < 6; thisNote++) {
+  
+      int noteDuration1 = 1000 / noteDurations1[thisNote];
+      tone(9, melody1[thisNote], noteDuration1);
+      int pauseBetweenNotes = noteDuration1 * 1.30;
+      delay(pauseBetweenNotes);
+    }
+  } else {
+    digitalWrite(ledPin1, LOW);
+    noTone(9);
+  }
+
+  if (buttonState2 == HIGH) {
+    digitalWrite(ledPin2, HIGH);
+
+//This whole section of the code was borrowed from the toneMelody example 
+    for (int thisNote = 0; thisNote < 6; thisNote++) {
+  
+      int noteDuration2 = 1000 / noteDurations2[thisNote];
+      tone(9, melody2[thisNote], noteDuration2);
+      int pauseBetweenNotes = noteDuration2 * 1.30;
+      delay(pauseBetweenNotes);
+    } 
+  } else {
+    digitalWrite(ledPin2, LOW);
+    noTone(9);
+  }
+  Serial.println(buttonState2);
+}
